@@ -1,0 +1,27 @@
+# dependencies
+node_modules/
+
+# builds
+.next/
+dist/
+out/
+build/
+
+# env
+.env
+.env.local
+.env.*.local
+
+# logs
+*.log
+
+# system
+.DS_Store
+Thumbs.db
+
+# editor
+.vscode/
+.idea/
+
+# misc
+coverage/
