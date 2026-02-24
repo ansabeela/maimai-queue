@@ -54,7 +54,7 @@ export function JoinQueueModal({ isOpen, onClose, onJoin }: JoinQueueModalProps)
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="fixed inset-0 bg-black/50 z-40"
+            className="fixed inset-0 bg-black/50 z-40 backdrop-blur-sm"
           />
 
           {/* Modal */}
@@ -62,9 +62,10 @@ export function JoinQueueModal({ isOpen, onClose, onJoin }: JoinQueueModalProps)
             initial={{ opacity: 0, scale: 0.95, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
-            className="fixed inset-x-4 top-1/2 -translate-y-1/2 max-w-md mx-auto bg-white rounded-3xl shadow-2xl z-50 overflow-hidden"
+            className="fixed inset-x-4 top-1/2 -translate-y-1/2 max-w-md mx-auto bg-white rounded-3xl z-50 overflow-hidden"
             style={{
               background: "linear-gradient(135deg, #fef9fc 0%, #ffffff 100%)",
+              boxShadow: "0 20px 60px rgba(232, 160, 191, 0.3)",
             }}
           >
             {/* Header */}
@@ -80,7 +81,7 @@ export function JoinQueueModal({ isOpen, onClose, onJoin }: JoinQueueModalProps)
                   <X size={24} className="text-gray-600" />
                 </button>
               </div>
-              <p className="text-sm text-gray-600">Choose how you'd like to play</p>
+              <p className="text-sm text-gray-600 font-medium">Choose how you'd like to play</p>
             </div>
 
             {/* Content */}
@@ -101,7 +102,10 @@ export function JoinQueueModal({ isOpen, onClose, onJoin }: JoinQueueModalProps)
                         ? "linear-gradient(135deg, #E8A0BF20, #E8A0BF10)"
                         : "white",
                     border: selectedMode === "solo" ? "2px solid #E8A0BF" : "2px solid #e5e5e5",
-                    ...(selectedMode === "solo" && { ringColor: "#E8A0BF" }),
+                    ...(selectedMode === "solo" && {
+                      ringColor: "#E8A0BF",
+                      boxShadow: "0 4px 12px rgba(232, 160, 191, 0.25)",
+                    }),
                   }}
                 >
                   <div className="flex items-center gap-3">
@@ -135,7 +139,10 @@ export function JoinQueueModal({ isOpen, onClose, onJoin }: JoinQueueModalProps)
                         ? "linear-gradient(135deg, #E8A0BF20, #E8A0BF10)"
                         : "white",
                     border: selectedMode === "auto-pair" ? "2px solid #E8A0BF" : "2px solid #e5e5e5",
-                    ...(selectedMode === "auto-pair" && { ringColor: "#E8A0BF" }),
+                    ...(selectedMode === "auto-pair" && {
+                      ringColor: "#E8A0BF",
+                      boxShadow: "0 4px 12px rgba(232, 160, 191, 0.25)",
+                    }),
                   }}
                 >
                   <div className="flex items-center gap-3">
@@ -171,7 +178,10 @@ export function JoinQueueModal({ isOpen, onClose, onJoin }: JoinQueueModalProps)
                         ? "linear-gradient(135deg, #E8A0BF20, #E8A0BF10)"
                         : "white",
                     border: selectedMode === "pair" ? "2px solid #E8A0BF" : "2px solid #e5e5e5",
-                    ...(selectedMode === "pair" && { ringColor: "#E8A0BF" }),
+                    ...(selectedMode === "pair" && {
+                      ringColor: "#E8A0BF",
+                      boxShadow: "0 4px 12px rgba(232, 160, 191, 0.25)",
+                    }),
                   }}
                 >
                   <div className="flex items-center gap-3">
@@ -212,6 +222,9 @@ export function JoinQueueModal({ isOpen, onClose, onJoin }: JoinQueueModalProps)
                       onChange={(e) => setPlayer1Name(e.target.value)}
                       placeholder="Enter name..."
                       className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-pink-300 focus:outline-none transition-colors"
+                      style={{
+                        boxShadow: "0 2px 8px rgba(0, 0, 0, 0.05)",
+                      }}
                     />
                   </div>
 
@@ -227,6 +240,9 @@ export function JoinQueueModal({ isOpen, onClose, onJoin }: JoinQueueModalProps)
                         onChange={(e) => setPlayer2Name(e.target.value)}
                         placeholder="Enter partner's name..."
                         className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-pink-300 focus:outline-none transition-colors"
+                        style={{
+                          boxShadow: "0 2px 8px rgba(0, 0, 0, 0.05)",
+                        }}
                       />
                     </div>
                   )}
@@ -239,6 +255,9 @@ export function JoinQueueModal({ isOpen, onClose, onJoin }: JoinQueueModalProps)
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   className="bg-green-50 rounded-xl p-3"
+                  style={{
+                    border: "1px solid #7dd3a7",
+                  }}
                 >
                   <p className="text-xs text-gray-700">
                     <span className="font-semibold">Note:</span> You'll be automatically matched with
@@ -253,13 +272,16 @@ export function JoinQueueModal({ isOpen, onClose, onJoin }: JoinQueueModalProps)
               <button
                 onClick={handleSubmit}
                 disabled={!isValid}
-                className={`w-full py-4 rounded-full font-bold text-white shadow-lg text-lg transition-all ${
+                className={`w-full py-4 rounded-full font-bold text-white text-lg transition-all ${
                   !isValid ? "opacity-50 cursor-not-allowed" : "hover:shadow-xl"
                 }`}
                 style={{
                   background: isValid
                     ? "linear-gradient(135deg, #E8A0BF 0%, #d88aaa 100%)"
                     : "#e5e5e5",
+                  boxShadow: isValid
+                    ? "0 4px 16px rgba(232, 160, 191, 0.4)"
+                    : "none",
                 }}
               >
                 Join Queue

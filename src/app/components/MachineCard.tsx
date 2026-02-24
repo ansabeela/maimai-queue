@@ -19,7 +19,10 @@ export function MachineCard({ machine, index }: MachineCardProps) {
       style={{
         background: isPlaying
           ? "linear-gradient(135deg, #fff5fa 0%, #ffffff 100%)"
-          : "linear-gradient(135deg, #f5f5f5 0%, #ffffff 100%)",
+          : "linear-gradient(135deg, #f8f8f8 0%, #ffffff 100%)",
+        boxShadow: isPlaying
+          ? "0 2px 12px rgba(232, 160, 191, 0.15)"
+          : "0 2px 8px rgba(0, 0, 0, 0.05)",
       }}
     >
       <div className="flex items-center gap-3">
@@ -29,9 +32,10 @@ export function MachineCard({ machine, index }: MachineCardProps) {
           style={{
             background: isPlaying
               ? "linear-gradient(135deg, #E8A0BF40, #E8A0BF20)"
-              : "linear-gradient(135deg, #e5e5e5, #f0f0f0)",
+              : "linear-gradient(135deg, #e8e8e8, #f5f5f5)",
             border: isPlaying ? "3px solid #E8A0BF" : "3px solid #d0d0d0",
             color: isPlaying ? "#E8A0BF" : "#999",
+            boxShadow: isPlaying ? "0 0 8px rgba(232, 160, 191, 0.3)" : "none",
           }}
         >
           {machine.label}
@@ -46,10 +50,17 @@ export function MachineCard({ machine, index }: MachineCardProps) {
                   ? `${machine.currentPlayers.player1} × ${machine.currentPlayers.player2}`
                   : `${machine.currentPlayers.player1} (solo)`}
               </div>
-              <div className="text-xs text-gray-500">Now Playing</div>
+              <div
+                className="text-xs font-semibold"
+                style={{
+                  color: "#E8A0BF",
+                }}
+              >
+                Now Playing
+              </div>
             </>
           ) : (
-            <div className="text-sm text-gray-500">Available</div>
+            <div className="text-sm text-gray-400 font-medium">Available</div>
           )}
         </div>
 
@@ -62,7 +73,7 @@ export function MachineCard({ machine, index }: MachineCardProps) {
                 (machine.currentPlayers.mode === "pair" ? 540 : 420) -
                 machine.currentPlayers.timeRemaining
               }
-              size={50}
+              size={52}
               strokeWidth={4}
             />
           </div>
