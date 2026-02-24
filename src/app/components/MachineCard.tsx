@@ -8,7 +8,11 @@ interface MachineCardProps {
   elapsedTime: number;
 }
 
-export function MachineCard({ machine, index, elapsedTime = 0 }: MachineCardProps) {
+export function MachineCard({
+  machine,
+  index,
+  elapsedTime = 0,
+}: MachineCardProps) {
   const isPlaying = machine.status === "Playing" && machine.currentPlayers;
 
   return (
@@ -47,7 +51,8 @@ export function MachineCard({ machine, index, elapsedTime = 0 }: MachineCardProp
           {isPlaying && machine.currentPlayers ? (
             <>
               <div className="font-semibold text-gray-800 truncate mb-0.5">
-                {machine.currentPlayers.mode === "pair" && machine.currentPlayers.player2
+                {machine.currentPlayers.mode === "pair" &&
+                machine.currentPlayers.player2
                   ? `${machine.currentPlayers.player1} × ${machine.currentPlayers.player2}`
                   : `${machine.currentPlayers.player1} (solo)`}
               </div>
@@ -66,30 +71,31 @@ export function MachineCard({ machine, index, elapsedTime = 0 }: MachineCardProp
         </div>
 
         {/* Timer (if playing) */}
-{/* Timer (if playing) */}
-{isPlaying && machine.currentPlayers && (
-  <div className="shrink-0">
-    {(() => {
-      // 1. Determine the total session length
-      const totalDuration = machine.currentPlayers?.mode === "pair" ? 540 : 420;
-      
-      // 2. Calculate how much time had ALREADY passed in the mock data
-      const initialElapsed = totalDuration - (machine.currentPlayers?.timeRemaining || 0);
-      
-      // 3. Add the ticking seconds from our global clock
-      const currentElapsed = initialElapsed + elapsedTime;
+        {isPlaying && machine.currentPlayers && (
+          <div className="shrink-0">
+            {(() => {
+              // 1. Determine the total session length
+              const totalDuration =
+                machine.currentPlayers?.mode === "pair" ? 540 : 420;
 
-      return (
-        <CircularTimer
-          duration={totalDuration}
-          elapsed={currentElapsed}
-          size={52}
-          strokeWidth={4}
-        />
-      );
-    })()}
-  </div>
-)}
+              // 2. Calculate how much time had ALREADY passed in the mock data
+              const initialElapsed =
+                totalDuration - (machine.currentPlayers?.timeRemaining || 0);
+
+              // 3. Add the ticking seconds from our global clock
+              const currentElapsed = initialElapsed + elapsedTime;
+
+              return (
+                <CircularTimer
+                  duration={totalDuration}
+                  elapsed={currentElapsed}
+                  size={52}
+                  strokeWidth={4}
+                />
+              );
+            })()}
+          </div>
+        )}
       </div>
     </motion.div>
   );
