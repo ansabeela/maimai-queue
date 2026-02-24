@@ -5,9 +5,10 @@ import { CircularTimer } from "./CircularTimer";
 interface MachineCardProps {
   machine: MachineType;
   index: number;
+  elapsedTime: number;
 }
 
-export function MachineCard({ machine, index }: MachineCardProps) {
+export function MachineCard({ machine, index, elapsedTime = 0 }: MachineCardProps) {
   const isPlaying = machine.status === "Playing" && machine.currentPlayers;
 
   return (
@@ -65,19 +66,30 @@ export function MachineCard({ machine, index }: MachineCardProps) {
         </div>
 
         {/* Timer (if playing) */}
-        {isPlaying && machine.currentPlayers && (
-          <div className="shrink-0">
-            <CircularTimer
-              duration={machine.currentPlayers.mode === "pair" ? 540 : 420}
-              elapsed={
-                (machine.currentPlayers.mode === "pair" ? 540 : 420) -
-                machine.currentPlayers.timeRemaining
-              }
-              size={52}
-              strokeWidth={4}
-            />
-          </div>
-        )}
+{/* Timer (if playing) */}
+{isPlaying && machine.currentPlayers && (
+  <div className="shrink-0">
+    {(() => {
+      // 1. Determine the total session length
+      const totalDuration = machine.currentPlayers?.mode === "pair" ? 540 : 420;
+      
+      // 2. Calculate how much time had ALREADY passed in the mock data
+      const initialElapsed = totalDuration - (machine.currentPlayers?.timeRemaining || 0);
+      
+      // 3. Add the ticking seconds from our global clock
+      const currentElapsed = initialElapsed + elapsedTime;
+
+      return (
+        <CircularTimer
+          duration={totalDuration}
+          elapsed={currentElapsed}
+          size={52}
+          strokeWidth={4}
+        />
+      );
+    })()}
+  </div>
+)}
       </div>
     </motion.div>
   );

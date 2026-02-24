@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "motion/react";
 import { MapPin, Radio } from "lucide-react";
 import { locations, cities } from "../data/mockData";
@@ -7,7 +7,21 @@ import { LocationCard } from "../components/LocationCard";
 export function CityOverview() {
   const [selectedCity, setSelectedCity] = useState("Jakarta");
 
-  const filteredLocations = locations.filter((loc) => loc.city === selectedCity);
+  const filteredLocations = locations.filter(
+    (loc) => loc.city === selectedCity,
+  );
+
+  const [globalElapsed, setGlobalElapsed] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setGlobalElapsed((prev) => prev + 1);
+    }, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+  // This will now show up in your console when you are on the Main Page
+  console.log("Main Page Ticking:", globalElapsed);
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: "#fef5fa" }}>
@@ -58,7 +72,10 @@ export function CityOverview() {
               }}
             >
               <Radio size={18} style={{ color: "#E8A0BF" }} />
-              <span className="font-semibold text-sm" style={{ color: "#E8A0BF" }}>
+              <span
+                className="font-semibold text-sm"
+                style={{ color: "#E8A0BF" }}
+              >
                 maimai
               </span>
             </div>
@@ -68,10 +85,13 @@ export function CityOverview() {
           <div className="flex items-center gap-2">
             <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-green-100">
               <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-              <span className="text-xs font-semibold text-green-700">Live Updates</span>
+              <span className="text-xs font-semibold text-green-700">
+                Live Updates
+              </span>
             </div>
             <span className="text-xs text-gray-500">
-              {filteredLocations.length} location{filteredLocations.length !== 1 ? "s" : ""} found
+              {filteredLocations.length} location
+              {filteredLocations.length !== 1 ? "s" : ""} found
             </span>
           </div>
         </div>
@@ -81,11 +101,18 @@ export function CityOverview() {
       <div className="px-4 py-6 max-w-md mx-auto space-y-4">
         {filteredLocations.length > 0 ? (
           filteredLocations.map((location, index) => (
-            <LocationCard key={location.id} location={location} index={index} />
+            <LocationCard
+              key={location.id}
+              location={location}
+              index={index}
+              elapsedTime={globalElapsed}
+            />
           ))
         ) : (
           <div className="text-center py-12">
-            <p className="text-gray-500">No locations found in {selectedCity}</p>
+            <p className="text-gray-500">
+              No locations found in {selectedCity}
+            </p>
           </div>
         )}
       </div>

@@ -18,6 +18,16 @@ export function QueuePage() {
   const [currentUserId, setCurrentUserId] = useState<string | undefined>(undefined);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showTooltip, setShowTooltip] = useState(false);
+  const [globalElapsed, setGlobalElapsed] = useState(0);
+
+useEffect(() => {
+    const interval = setInterval(() => {
+      setGlobalElapsed(prev => prev + 1);
+    }, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+ console.log("Global Clock Ticking:", globalElapsed);
 
   if (!location) {
     return (
@@ -97,16 +107,21 @@ export function QueuePage() {
         </div>
 
         {/* Machines */}
-        <div>
-          <h2 className="text-lg font-semibold text-gray-700 mb-3 flex items-center gap-2">
-            Machines ({location.machineCount})
-          </h2>
-          <div className="space-y-3">
-            {location.machines.map((machine, index) => (
-              <MachineCard key={machine.id} machine={machine} index={index} />
-            ))}
-          </div>
-        </div>
+<div>
+  <h2 className="text-lg font-semibold text-gray-700 mb-3 flex items-center gap-2">
+    Machines ({location.machineCount})
+  </h2>
+  <div className="space-y-3">
+    {location.machines.map((machine, index) => (
+      <MachineCard 
+        key={machine.id} 
+        machine={machine} 
+        index={index} 
+        elapsedTime={globalElapsed}
+      />
+    ))}
+  </div>
+</div>
 
         {/* Queue List */}
         {mockQueueEntries.length > 0 && (

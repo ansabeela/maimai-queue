@@ -7,9 +7,14 @@ import { MachineCard } from "./MachineCard";
 interface LocationCardProps {
   location: Location;
   index: number;
+  elapsedTime: number;
 }
 
-export function LocationCard({ location, index }: LocationCardProps) {
+export function LocationCard({
+  location,
+  index,
+  elapsedTime,
+}: LocationCardProps) {
   const navigate = useNavigate();
 
   return (
@@ -35,7 +40,8 @@ export function LocationCard({ location, index }: LocationCardProps) {
           <div className="flex items-center gap-1.5">
             <Monitor size={16} style={{ color: "#E8A0BF" }} />
             <span>
-              {location.machineCount} {location.machineCount === 1 ? "Machine" : "Machines"}
+              {location.machineCount}{" "}
+              {location.machineCount === 1 ? "Machine" : "Machines"}
             </span>
           </div>
 
@@ -50,7 +56,12 @@ export function LocationCard({ location, index }: LocationCardProps) {
       {/* Machines */}
       <div className="space-y-2 mb-4">
         {location.machines.map((machine, idx) => (
-          <MachineCard key={machine.id} machine={machine} index={idx} />
+          <MachineCard
+            key={machine.id}
+            machine={machine}
+            index={idx}
+            elapsedTime={elapsedTime}
+          />
         ))}
       </div>
 
@@ -59,7 +70,8 @@ export function LocationCard({ location, index }: LocationCardProps) {
         <div className="pt-3 border-t border-pink-100">
           <div className="flex items-center justify-between">
             <span className="text-sm text-gray-600 font-medium">
-              {location.queueLength} {location.queueLength === 1 ? "person" : "people"} waiting
+              {location.queueLength}{" "}
+              {location.queueLength === 1 ? "person" : "people"} waiting
             </span>
             <div className="flex gap-1.5">
               {[...Array(Math.min(5, location.queueLength))].map((_, i) => (
