@@ -27,8 +27,6 @@ useEffect(() => {
     return () => clearInterval(interval);
   }, []);
 
- console.log("Global Clock Ticking:", globalElapsed);
-
   if (!location) {
     return (
       <div className="min-h-screen flex items-center justify-center">

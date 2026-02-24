@@ -20,9 +20,6 @@ export function CityOverview() {
     return () => clearInterval(interval);
   }, []);
 
-  // This will now show up in your console when you are on the Main Page
-  console.log("Main Page Ticking:", globalElapsed);
-
   return (
     <div className="min-h-screen" style={{ backgroundColor: "#fef5fa" }}>
       {/* Header */}
